@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import Wrapper from "../Wrapper";
 
 export const NavBar: React.FC = () => {
@@ -10,18 +10,18 @@ export const NavBar: React.FC = () => {
         </div>
         <Nav>
           <ul>
-            <li>
+            <NavItem selected>
               <a>Inicio</a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a>Quizzes</a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a>Sobre</a>
-            </li>
-            <li>
+            </NavItem>
+            <NavItem>
               <a>Contato</a>
-            </li>
+            </NavItem>
           </ul>
         </Nav>
       </Wrapper>
@@ -33,30 +33,63 @@ const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2rem;
-  color: #fff;
-  height: 4rem;
-  width: 100%;
-
-  ${styled(Wrapper)} {
-    display: flex;
-  }
+  height: 100%;
 
   ul {
+    height: 100%;
     display: flex;
     list-style: none;
+    gap: 42px;
     li {
       margin: 0 1rem;
     }
   }
 `;
 
-const Container = styled.div`
+const NavItem = styled.li<{ selected?: boolean }>`
+  height: 100%;
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    &:hover {
+      color: #770cf2;
+    }
+  }
+
+  ${({ theme, selected }) =>
+    selected &&
+    css`
+      a {
+        box-sizing: content-box;
+        color: #770cf2;
+      }
+
+      border-bottom: 4px solid ${theme.colors.primary};
+    `}
+`;
+
+const Container = styled.header`
+  border-bottom: 2px solid #770cf2;
+  display: flex;
+  justify-content: center;
   align-items: center;
   padding: 0 2rem;
-  background: #282c34;
+  background: #000;
   color: #fff;
   height: 72px;
+  width: 100%;
+
+  .wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;

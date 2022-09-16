@@ -7,16 +7,12 @@ interface Props {
   style?: React.CSSProperties;
 }
 const Wrapper: FC<Props> = ({ children, className, style }) => (
-  <div className={className} style={style}>
+  <StyledWrapper className={"wrapper " + className} style={style}>
     {children}
-  </div>
+  </StyledWrapper>
 );
 
-const StyledWrapper = styled(Wrapper)`
-  background-color: red !important;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+const StyledWrapper = styled.div`
   max-width: 1280px;
   width: 100%;
 `;
