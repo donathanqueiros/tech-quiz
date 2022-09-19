@@ -34,7 +34,7 @@ const OpenSource: React.FC<Props> = ({ className }) => {
         rel="noreferrer"
       >
         <button>
-          <AiFillGithub size={22} /> <span>Star</span>
+          <AiFillGithub size={22} fill="black" /> <span>Star</span>
         </button>
         <div>
           <span>{countStars}</span>
@@ -74,7 +74,6 @@ const StyledOpenSource = styled(OpenSource)`
     align-items: center;
     justify-content: center;
     gap: 8px;
-
     button {
       cursor: pointer;
       width: 82px;
@@ -87,6 +86,7 @@ const StyledOpenSource = styled(OpenSource)`
       gap: 2px;
 
       span {
+        color: black;
         font-weight: bold;
         font-size: 18px;
       }
@@ -96,7 +96,13 @@ const StyledOpenSource = styled(OpenSource)`
       color: black;
       border-radius: 4px;
       position: relative;
+      height: 30px;
+      min-width: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       span {
+        color: black;
         font-weight: bold;
         font-size: 18px;
         padding: 18px 4px;
@@ -105,7 +111,7 @@ const StyledOpenSource = styled(OpenSource)`
       &:before {
         content: " ";
         left: -12px;
-        top: 6px;
+        top: 10px;
         position: absolute;
         border: 6px solid transparent;
         border-right-color: white;

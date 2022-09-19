@@ -1,7 +1,10 @@
+import Link from "next/link";
+import { useRouter } from "next/router";
 import styled, { css } from "styled-components";
 import Wrapper from "../Wrapper";
 
 export const NavBar: React.FC = () => {
+  const { asPath } = useRouter();
   return (
     <Container>
       <Wrapper>
@@ -10,17 +13,25 @@ export const NavBar: React.FC = () => {
         </div>
         <Nav>
           <ul>
-            <NavItem selected>
-              <a>Inicio</a>
+            <NavItem selected={asPath === "/"}>
+              <Link href="/">
+                <a>Inicio</a>
+              </Link>
             </NavItem>
-            <NavItem>
-              <a>Quizzes</a>
+            <NavItem selected={asPath.includes("/quiz")}>
+              <Link href="/quiz">
+                <a>Quizzes</a>
+              </Link>
             </NavItem>
-            <NavItem>
-              <a>Sobre</a>
+            <NavItem selected={asPath === "/about"}>
+              <Link href="/about">
+                <a>Sobre</a>
+              </Link>
             </NavItem>
-            <NavItem>
-              <a>Contato</a>
+            <NavItem selected={asPath === "/contact"}>
+              <Link href="/contact">
+                <a>Contato</a>
+              </Link>
             </NavItem>
           </ul>
         </Nav>
@@ -36,8 +47,10 @@ const Nav = styled.nav`
   height: 100%;
 
   ul {
+    flex-wrap: wrap;
     height: 100%;
     display: flex;
+
     list-style: none;
     gap: 42px;
     li {
@@ -83,14 +96,17 @@ const Container = styled.header`
   padding: 0 2rem;
   background: #000;
   color: #fff;
-  height: 72px;
+  min-height: 72px;
+  padding: 16px 16px;
   width: 100%;
 
   .wrapper {
     height: 100%;
+    flex-wrap: wrap;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 8px;
   }
   h1 {
     color: ${(props) => props.theme.colors.primary};

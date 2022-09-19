@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-interface RoadCardProps {
+interface RoadCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   color: string;
 }
 
-const RoadCard: React.FC<RoadCardProps> = ({ color, title }) => {
+const RoadCard: React.FC<RoadCardProps> = ({ color, title, ...props }) => {
   return (
-    <Container color={color}>
+    <Container color={color} {...props}>
       <span className="icon">
         <svg
           width="81"
@@ -242,6 +242,7 @@ const RoadCard: React.FC<RoadCardProps> = ({ color, title }) => {
 };
 
 const Container = styled.div`
+  cursor: pointer;
   position: relative;
   width: 252px;
   height: 108px;
@@ -263,6 +264,11 @@ const Container = styled.div`
   .icon {
     position: absolute;
     top: -30px;
+  }
+
+  &:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease-in-out;
   }
 `;
 

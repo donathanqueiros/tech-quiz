@@ -1,8 +1,13 @@
+import { FC } from "react";
 import styled from "styled-components";
 
-const Footer = () => {
+interface Props {
+  className?: string;
+}
+
+const Footer: FC<Props> = ({ className }) => {
   return (
-    <Content>
+    <footer className={className}>
       <div>
         <h1>Logo</h1>
       </div>
@@ -12,11 +17,11 @@ const Footer = () => {
           vestibulum a ligula.
         </span>
       </div>
-    </Content>
+    </footer>
   );
 };
 
-const Content = styled.footer`
+const StyledFooter = styled(Footer)`
   display: flex;
   flex-direction: column;
   height: 144px;
@@ -26,13 +31,6 @@ const Content = styled.footer`
   gap: 12px;
   color: white;
   background-color: ${(props) => props.theme.colors.primary}20;
-
-  /* div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 24px;
-  } */
 `;
 
-export default Footer;
+export default StyledFooter;

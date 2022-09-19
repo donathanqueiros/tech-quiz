@@ -15,6 +15,7 @@ const Wrapper: FC<Props> = ({ children, className, style }) => (
 const StyledWrapper = styled.div`
   max-width: 1280px;
   width: 100%;
+  padding: 0px 126px ;
 `;
 
 export default Wrapper;
