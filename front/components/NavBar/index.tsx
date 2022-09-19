@@ -6,7 +6,7 @@ export const NavBar: React.FC = () => {
     <Container>
       <Wrapper>
         <div>
-          <h1>Lorem</h1>
+          <h1>TechQUIZ</h1>
         </div>
         <Nav>
           <ul>
@@ -91,5 +91,8 @@ const Container = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  h1 {
+    color: ${(props) => props.theme.colors.primary};
   }
 `;
