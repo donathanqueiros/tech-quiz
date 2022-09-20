@@ -14,7 +14,7 @@ interface Props {
 
 const Contents: FC<Props> = ({ className }) => {
   const { push } = useRouter();
-  const [openSelectLevelModal, setOpenSelectLevelModal] = useState(true);
+  const [openSelectLevelModal, setOpenSelectLevelModal] = useState(false);
 
   const color = "green";
 
@@ -69,7 +69,10 @@ const Contents: FC<Props> = ({ className }) => {
         </Wrapper>
       </div>
 
-      <StyledModalSelectLevel open={openSelectLevelModal} />
+      <StyledModalSelectLevel
+        open={openSelectLevelModal}
+        onCancel={() => setOpenSelectLevelModal(false)}
+      />
     </>
   );
 };

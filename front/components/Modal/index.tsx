@@ -11,13 +11,20 @@ interface Props {
 
 const Modal: FC<Props> = ({ children, className, open, onCancel, onOk }) => {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "unset";
-    };
-  }, []);
+    if (open) {
+      document.body.style.overflow = "hidden ";
+    } else {
+      document.body.style.overflow = "";
+    }
 
-  return <div className={className}>{children}</div>;
+    console.log(open);
+  }, [open]);
+
+  return open ? (
+    <div onClick={onCancel} className={className}>
+      {children}
+    </div>
+  ) : null;
 };
 
 const StyledModal = styled(Modal)`

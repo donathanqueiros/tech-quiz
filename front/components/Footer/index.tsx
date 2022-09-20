@@ -1,5 +1,6 @@
 import { FC } from "react";
 import styled from "styled-components";
+import { AiFillGithub } from "react-icons/ai";
 
 interface Props {
   className?: string;
@@ -9,12 +10,17 @@ const Footer: FC<Props> = ({ className }) => {
   return (
     <footer className={className}>
       <div>
-        <h1>Logo</h1>
+        <h1>TechQUIZ</h1>
       </div>
       <div>
         <span>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-          vestibulum a ligula.
+          Acesse o repositório no Github &nbsp;
+          <span className="git-button">
+            <a href="" target="_blank">
+              <AiFillGithub size={22} fill="black" />
+              github
+            </a>
+          </span>
         </span>
       </div>
     </footer>
@@ -31,6 +37,37 @@ const StyledFooter = styled(Footer)`
   gap: 12px;
   color: white;
   background-color: ${(props) => props.theme.colors.primary}20;
+
+  h1 {
+    color: ${(props) => props.theme.colors.primary};
+  }
+
+  span {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: ${(props) => props.theme.colors.secondary};
+
+    font-size: 14px;
+  }
+
+  .git-button {
+    width: fit-content;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    border-radius: 8px;
+    gap: 8px;
+    a {
+      display: flex;
+      align-items: center;
+      color: black;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
 `;
 
 export default StyledFooter;

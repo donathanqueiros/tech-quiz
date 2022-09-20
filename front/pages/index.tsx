@@ -1,4 +1,4 @@
-import type { NextPage } from "next";
+import type { GetServerSideProps, GetStaticProps, NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import styled from "styled-components";
@@ -7,8 +7,14 @@ import RoadCard from "../components/RoadCard";
 import Wrapper from "../components/Wrapper";
 import bg from "assets/background.jpg";
 import { useRouter } from "next/router";
+import { getRoads } from "services/roadService";
+import { Road } from "data/road";
 
-const Home: NextPage = () => {
+interface Props {
+  roads: Road[];
+}
+
+const Home: NextPage<Props> = ({ roads }) => {
   const [maxRoad, setMaxRoad] = useState(6);
   const { push } = useRouter();
 
@@ -31,19 +37,16 @@ const Home: NextPage = () => {
           </span>
 
           <Cards>
-            {Array(12)
-              .fill(0)
-              .slice(0, maxRoad)
-              .map((_, index) => (
-                <RoadCard
-                  key={index}
-                  title="Frontend"
-                  color="#770cf2"
-                  onClick={() => {
-                    push("/quiz/frontend");
-                  }}
-                />
-              ))}
+            {roads.map((road, index) => (
+              <RoadCard
+                key={index}
+                title={road.name}
+                color={road.color}
+                onClick={() => {
+                  push(`/quiz/${road.id}`);
+                }}
+              />
+            ))}
           </Cards>
 
           {maxRoad == 6 && (
@@ -130,5 +133,13 @@ const Container = styled.div`
   min-height: 100vh;
   background-color: black;
 `;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  const roads = await getRoads();
+
+  return {
+    props: { roads },
+  };
+};
 
 export default Home;

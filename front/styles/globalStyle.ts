@@ -1,12 +1,13 @@
 import { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-html,
 body {
   padding: 0;
   margin: 0;
   font-family: "DM Sans", sans-serif;
-
+  width:100vw ;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 a {
