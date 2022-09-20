@@ -8,7 +8,7 @@ export default function handler(
 ) {
   const { id } = req.query;
 
-  const road = data.find((road) => road.id === id);
+  const road = data.find((road) => road.id === Number(id));
 
   if (road) {
     res.status(200).json(road);

@@ -2,10 +2,9 @@ import CardTopic from "components/CardTopic";
 import StyledNavigation from "components/Navigation";
 import Wrapper from "components/Wrapper";
 import { useRouter } from "next/router";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import bg from "assets/background.jpg";
-import StyledModal from "components/Modal";
 import StyledModalSelectLevel from "components/ModalLevel";
 import { Road } from "data/road";
 import { GetServerSideProps } from "next";
@@ -19,7 +18,12 @@ interface Props {
 const Contents: FC<Props> = ({ className, road }) => {
   const { push } = useRouter();
   const [openSelectLevelModal, setOpenSelectLevelModal] = useState(false);
-  const { color, id, name, topics, description } = road;
+  const { color, id, name, topics } = road;
+  const [topicId, setTopicId] = useState<number>();
+  const handleSelectLevel = (level: number) => {
+    push(`/quiz/${id}/${topicId}?level=${level}`);
+    setOpenSelectLevelModal(true);
+  };
 
   return (
     <>
@@ -29,7 +33,7 @@ const Contents: FC<Props> = ({ className, road }) => {
           onClick={() => {
             push("/");
           }}
-          title={"Frontend"}
+          title={name}
         />
 
         <Wrapper>
@@ -43,6 +47,7 @@ const Contents: FC<Props> = ({ className, road }) => {
                 color={color}
                 onClick={() => {
                   setOpenSelectLevelModal(true);
+                  setTopicId(topic.id);
                 }}
               >
                 {topic.name}
@@ -55,6 +60,7 @@ const Contents: FC<Props> = ({ className, road }) => {
       <StyledModalSelectLevel
         open={openSelectLevelModal}
         onCancel={() => setOpenSelectLevelModal(false)}
+        onOk={handleSelectLevel}
       />
     </>
   );
@@ -108,7 +114,6 @@ const StyledContents = styled(Contents)`
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const { id } = context.params as { id: string };
-  console.log(context);
   const road = await getRoadById(id);
 
   return {

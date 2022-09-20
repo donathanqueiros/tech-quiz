@@ -16,8 +16,6 @@ const Modal: FC<Props> = ({ children, className, open, onCancel, onOk }) => {
     } else {
       document.body.style.overflow = "";
     }
-
-    console.log(open);
   }, [open]);
 
   return open ? (

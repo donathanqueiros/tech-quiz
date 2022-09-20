@@ -7,9 +7,10 @@ interface Props {
   open?: boolean;
   onCancel?: () => void;
   className?: string;
+  onOk?: (level: number) => void;
 }
 
-const ModalSelectLevel: FC<Props> = ({ className, open, onCancel }) => {
+const ModalSelectLevel: FC<Props> = ({ className, open, onCancel, onOk }) => {
   return (
     <StyledModal open={open}>
       <div className={className}>
@@ -179,10 +180,10 @@ const ModalSelectLevel: FC<Props> = ({ className, open, onCancel }) => {
         <h1>Selecione o nível</h1>
 
         <div className="levels">
-          <button onClick={onCancel}>Iniciante</button>
-          <button onClick={onCancel}>Intermediário</button>
-          <button onClick={onCancel}>Avançado</button>
-          <button onClick={onCancel}>Todos</button>
+          <button onClick={() => onOk && onOk(1)}>Iniciante</button>
+          <button onClick={() => onOk && onOk(2)}>Intermediário</button>
+          <button onClick={() => onOk && onOk(3)}>Avançado</button>
+          <button onClick={() => onOk && onOk(0)}>Todos</button>
         </div>
 
         <button className="close-select-level-button" onClick={onCancel}>

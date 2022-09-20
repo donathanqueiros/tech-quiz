@@ -7,11 +7,18 @@ interface Props {
   content?: string;
   color?: string;
   status?: "correct" | "incorrect" | "default";
+  onClick?: () => void;
 }
 
-const Alternative: FC<Props> = ({ prefix, content, className, status }) => {
+const Alternative: FC<Props> = ({
+  prefix,
+  content,
+  className,
+  status,
+  onClick,
+}) => {
   return (
-    <div className={className + " " + status}>
+    <div className={className + " " + status} onClick={onClick}>
       <div className="prefix">
         <span>{prefix}</span>
       </div>

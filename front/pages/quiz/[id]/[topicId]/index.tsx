@@ -3,17 +3,53 @@ import StyledNavigation from "components/Navigation";
 import ProgressBar from "components/ProgressBar";
 import StyledQuestion from "components/Question";
 import Wrapper from "components/Wrapper";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import bg from "assets/bg.png";
+import { GetServerSideProps, GetStaticProps } from "next";
+import { Topic } from "data/road";
+import { getQuiz } from "services/quizService";
 
 interface Props {
   className?: string;
+  topic: Topic;
 }
 
-const Quiz: FC<Props> = ({ className }) => {
+const Quiz: FC<Props> = ({ className, topic }) => {
   const color = "#00FF00";
   const [percent, setPercent] = useState(50);
+  const prefix = ["A", "B", "C", "D"];
+
+  const [questionNumber, setQuestionNumber] = useState(0);
+
+  const [answers, setAnswers] = useState<any[]>([{ isAnswered: false }]);
+
+  const { questions } = topic;
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowRight") {
+        questionNumber < topic.questions.length - 1 &&
+          setQuestionNumber((prev) => prev + 1);
+      } else if (event.key === "ArrowLeft") {
+        questionNumber > 0 && setQuestionNumber((prev) => prev - 1);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [questionNumber]);
+
+  useEffect(() => {
+    setPercent((questionNumber / topic.questions.length) * 100);
+  }, [questionNumber]);
+
+  if (topic.questions.length === 0) {
+    return <div>Conteudo ainda não disponivel</div>;
+  }
 
   return (
     <div className={className}>
@@ -106,29 +142,36 @@ const Quiz: FC<Props> = ({ className }) => {
           </svg>
         </span>
 
-        <StyledQuestion question={"question"} />
+        <StyledQuestion question={questions[questionNumber].name} />
 
         <div className="alternatives">
-          <StyledAlternative
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            prefix="A"
-            color={color}
-          />
-          <StyledAlternative
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            prefix="B"
-            color={color}
-          />
-          <StyledAlternative
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            prefix="C"
-            color={color}
-          />
-          <StyledAlternative
-            content="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit.Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-            prefix="D"
-            color={color}
-          />
+          {questions[questionNumber].alternatives.map((alternative, i) => (
+            <StyledAlternative
+              key={alternative.id}
+              prefix={prefix[i]}
+              content={alternative.content}
+              onClick={() => {
+                !answers[questionNumber]?.isAnswered &&
+                  setAnswers((prev) => {
+                    const newAnswers = [...prev];
+                    newAnswers[questionNumber] = {
+                      alternativeId: alternative.id,
+                    };
+                    newAnswers[questionNumber]["isAnswered"] = true;
+                    return newAnswers;
+                  });
+              }}
+              status={
+                answers[questionNumber]?.isAnswered
+                  ? alternative.id === questions[questionNumber].answerId
+                    ? "correct"
+                    : answers[questionNumber].alternativeId === alternative.id
+                    ? "incorrect"
+                    : "default"
+                  : "default"
+              }
+            />
+          ))}
         </div>
       </Wrapper>
     </div>
@@ -172,5 +215,19 @@ const StyledQuiz = styled(Quiz)`
     gap: 24px;
   }
 `;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id, topicId, level } = context.query as {
+    id: string;
+    topicId: string;
+    level: string;
+  };
+
+  const topic = await getQuiz(id, topicId, level);
+
+  return {
+    props: { topic },
+  };
+};
 
 export default StyledQuiz;

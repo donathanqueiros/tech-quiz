@@ -3,7 +3,7 @@ import styled from "styled-components";
 const Question = ({ className, question }: any) => {
   return (
     <div className={className}>
-      <h1>question</h1>
+      <h1>{question}</h1>
     </div>
   );
 };
