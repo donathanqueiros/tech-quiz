@@ -7,16 +7,19 @@ import styled from "styled-components";
 import bg from "assets/background.jpg";
 import StyledModal from "components/Modal";
 import StyledModalSelectLevel from "components/ModalLevel";
+import { Road } from "data/road";
+import { GetServerSideProps } from "next";
+import { getRoadById } from "services/roadService";
 
 interface Props {
   className?: string;
+  road: Road;
 }
 
-const Contents: FC<Props> = ({ className }) => {
+const Contents: FC<Props> = ({ className, road }) => {
   const { push } = useRouter();
   const [openSelectLevelModal, setOpenSelectLevelModal] = useState(false);
-
-  const color = "green";
+  const { color, id, name, topics, description } = road;
 
   return (
     <>
@@ -33,38 +36,18 @@ const Contents: FC<Props> = ({ className }) => {
           <ContentText color={color}>Conteúdos</ContentText>
 
           <div className="topics">
-            <CardTopic
-              onClick={() => setOpenSelectLevelModal(true)}
-              color={color}
-            >
-              teste
-            </CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
-            <CardTopic color={color}>teste</CardTopic>
+            {topics.map((topic, index) => (
+              <CardTopic
+                key={index}
+                title={topic.name}
+                color={color}
+                onClick={() => {
+                  setOpenSelectLevelModal(true);
+                }}
+              >
+                {topic.name}
+              </CardTopic>
+            ))}
           </div>
         </Wrapper>
       </div>
@@ -122,5 +105,15 @@ const StyledContents = styled(Contents)`
     }
   }
 `;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const { id } = context.params as { id: string };
+  console.log(context);
+  const road = await getRoadById(id);
+
+  return {
+    props: { road },
+  };
+};
 
 export default StyledContents;
