@@ -5,16 +5,19 @@ import styled, { ThemeProvider } from "styled-components";
 import { NavBar } from "components/NavBar";
 import Footer from "components/Footer";
 import { GlobalStyle } from "styles/globalStyle";
+import { RoadProvider } from "contexts/RoadContext";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <ThemeProvider theme={theme}>
-        <Container>
-          <NavBar />
-          <Component {...pageProps} />
-          <Footer />
-        </Container>
+        <RoadProvider>
+          <Container>
+            <NavBar />
+            <Component {...pageProps} />
+            <Footer />
+          </Container>
+        </RoadProvider>
       </ThemeProvider>
       <GlobalStyle />
     </>

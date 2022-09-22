@@ -9,6 +9,7 @@ import StyledModalSelectLevel from "components/ModalLevel";
 import { Road } from "data/road";
 import { GetServerSideProps } from "next";
 import { getRoadById } from "services/roadService";
+import { useRoad } from "contexts/RoadContext";
 
 interface Props {
   className?: string;
@@ -24,6 +25,11 @@ const Contents: FC<Props> = ({ className, road }) => {
     push(`/quiz/${id}/${topicId}?level=${level}`);
     setOpenSelectLevelModal(true);
   };
+  const { setRoad } = useRoad();
+
+  useEffect(() => {
+    setRoad(road);
+  }, [topics]);
 
   return (
     <>

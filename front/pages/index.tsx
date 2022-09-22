@@ -9,6 +9,7 @@ import bg from "assets/background.jpg";
 import { useRouter } from "next/router";
 import { getRoads } from "services/roadService";
 import { Road } from "data/road";
+import { useRoad } from "contexts/RoadContext";
 
 interface Props {
   roads: Road[];
@@ -42,9 +43,7 @@ const Home: NextPage<Props> = ({ roads }) => {
                 key={index}
                 title={road.name}
                 color={road.color}
-                onClick={() => {
-                  push(`/quiz/${road.id}`);
-                }}
+                onClick={() => push(`/quiz/${road.id}`)}
               />
             ))}
           </Cards>
