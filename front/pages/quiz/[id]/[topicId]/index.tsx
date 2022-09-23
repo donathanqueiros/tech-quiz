@@ -10,7 +10,7 @@ import { GetServerSideProps, GetStaticProps } from "next";
 import { Topic } from "data/road";
 import { getQuiz } from "services/quizService";
 import { useRoad } from "contexts/RoadContext";
-import Content from "components/CardResult";
+import CardResult from "components/CardResult";
 
 interface Props {
   className?: string;
@@ -78,7 +78,12 @@ const Quiz: FC<Props> = ({ className, topic }) => {
       <Wrapper>
         <ProgressBar color={color} percent={percent} />
         {isFinished ? (
-          <Content onPlayAgain={() => null} onShowResult={() => null} />
+          <CardResult
+            rightAnswers={15}
+            wrongAnswers={5}
+            onPlayAgain={() => null}
+            onShowResult={() => null}
+          />
         ) : (
           <>
             <span className="folder-icon-quiz">
