@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getRoads } from "services/roadService";
 import styled from "styled-components";
 
-export default () => {
+export default function Contribute() {
   const [roads, setRoads] = useState<Road[]>([]);
   const [selectedRoad, setSelectedRoad] = useState<Road>();
   const [selectedTopic, setSelectedTopic] = useState<Topic>();
@@ -453,7 +453,7 @@ export default () => {
       )}
     </Content>
   );
-};
+}
 
 const roadColumns = [
   {
