@@ -4,6 +4,7 @@ export default {
   id: 1,
   name: "frontend",
   color: "#00FF00",
+  description:'',
   topics: [
     {
       id: 1,

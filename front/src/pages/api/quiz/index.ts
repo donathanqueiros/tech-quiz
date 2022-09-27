@@ -1,10 +1,10 @@
 import data from "data/data";
-import { Question, Topic } from "data/road";
+import { Road } from "data/road";
 import type { NextApiRequest, NextApiResponse } from "next";
 
 export default function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Topic | any>
+  res: NextApiResponse<Road | any>
 ) {
   const { roadId, topicId, level = 0 } = req.query;
 
@@ -12,6 +12,7 @@ export default function handler(
 
   if (road) {
     const topic = road.topics.find((topic) => topic.id === Number(topicId));
+
     if (topic) {
       let questions = topic.questions;
 
@@ -22,7 +23,9 @@ export default function handler(
       }
       questions = questions?.sort(() => 0.5 - Math.random());
 
-      res.status(200).json({ ...topic, questions });
+      road.topics = [];
+      road.topics.push({ ...topic, questions });
+      res.status(200).json(road);
     } else {
       res.status(404).json({ message: `Topic with id: ${topicId} not found.` });
     }

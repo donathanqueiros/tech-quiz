@@ -6,15 +6,16 @@ import Wrapper from "components/Wrapper";
 import { FC, useEffect, useState } from "react";
 import styled from "styled-components";
 import bg from "assets/bg.png";
-import { GetServerSideProps, GetStaticProps } from "next";
-import { Topic } from "data/road";
+import { GetServerSideProps } from "next";
+import { Road } from "data/road";
 import { getQuiz } from "services/quizService";
 import { useRoad } from "contexts/RoadContext";
 import CardResult from "components/CardResult";
+import { useRouter } from "next/router";
 
 interface Props {
   className?: string;
-  topic: Topic;
+  road: Road;
 }
 
 interface Awnser {
@@ -22,16 +23,19 @@ interface Awnser {
   alternativeId?: number;
 }
 
-const Quiz: FC<Props> = ({ className, topic }) => {
+const Quiz: FC<Props> = ({ className, road }) => {
+  const topic = road.topics[0];
   const [percent, setPercent] = useState(50);
   const [questionNumber, setQuestionNumber] = useState(0);
   const [answers, setAnswers] = useState<Awnser[]>(
     topic.questions.map(() => ({ isAnswered: false }))
   );
+
+  const { asPath, push } = useRouter();
   const [isFinished, setIsFinished] = useState(false);
-  const { road } = useRoad();
   const { color } = road;
   const { questions } = topic;
+  const [showResults, setShowResults] = useState(false);
 
   const prefix = ["A", "B", "C", "D"];
 
@@ -61,12 +65,35 @@ const Quiz: FC<Props> = ({ className, topic }) => {
   };
 
   const handleFinish = () => {
-    setIsFinished(true);
+    setShowResults(true);
+  };
+
+  const handleOnPlayAgain = () => {
+    resetGame();
+    push(asPath);
+  };
+
+  const resetGame = () => {
+    setQuestionNumber(0);
+    setIsFinished(false);
+    setShowResults(false);
+    setAnswers(topic.questions.map(() => ({ isAnswered: false })));
+  };
+
+  const handleOnShowResult = () => {
+    setShowResults(false);
+    setQuestionNumber(0);
   };
 
   useEffect(() => {
     setPercent((questionNumber / topic.questions.length) * 100);
   }, [questionNumber]);
+
+  useEffect(() => {
+    if (answers.every((answer) => answer.isAnswered)) {
+      setIsFinished(true);
+    }
+  }, [answers]);
 
   if (topic.questions.length === 0) {
     return <div>Conteudo ainda não disponivel</div>;
@@ -77,12 +104,22 @@ const Quiz: FC<Props> = ({ className, topic }) => {
       <StyledNavigation color={color} title={"Frontend"} onClick={() => null} />
       <Wrapper>
         <ProgressBar color={color} percent={percent} />
-        {isFinished ? (
+        {showResults ? (
           <CardResult
-            rightAnswers={15}
-            wrongAnswers={5}
-            onPlayAgain={() => null}
-            onShowResult={() => null}
+            rightAnswers={
+              topic.questions.filter(
+                (question, index) =>
+                  question.answerId === answers[index].alternativeId
+              ).length
+            }
+            wrongAnswers={
+              topic.questions.filter(
+                (question, index) =>
+                  question.answerId !== answers[index].alternativeId
+              ).length
+            }
+            onPlayAgain={handleOnPlayAgain}
+            onShowResult={handleOnShowResult}
           />
         ) : (
           <>
@@ -313,10 +350,10 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     level: string;
   };
 
-  const topic = await getQuiz(id, topicId, level);
+  const road = await getQuiz(id, topicId, level);
 
   return {
-    props: { topic },
+    props: { road },
   };
 };
 

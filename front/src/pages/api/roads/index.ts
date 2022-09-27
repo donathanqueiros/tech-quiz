@@ -11,6 +11,7 @@ export default function handler(
     name: road.name,
     description: road.description,
     color: road.color,
+    topics: road.topics,
   }));
 
   res.status(200).json(response);

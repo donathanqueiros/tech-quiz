@@ -8,6 +8,13 @@ body {
   width:100vw ;
   scroll-behavior: smooth;
   overflow-x: hidden;
+
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: white;
+}
 }
 
 a {
@@ -15,10 +22,6 @@ a {
   text-decoration: none;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: white;
-}
+
+
 `;

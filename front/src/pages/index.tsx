@@ -9,7 +9,6 @@ import bg from "assets/background.jpg";
 import { useRouter } from "next/router";
 import { getRoads } from "services/roadService";
 import { Road } from "data/road";
-import { useRoad } from "contexts/RoadContext";
 
 interface Props {
   roads: Road[];

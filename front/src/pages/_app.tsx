@@ -6,20 +6,23 @@ import { NavBar } from "components/NavBar";
 import Footer from "components/Footer";
 import { GlobalStyle } from "styles/globalStyle";
 import { RoadProvider } from "contexts/RoadContext";
+import { useRouter } from "next/router";
+import "antd/dist/antd.css";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const { asPath } = useRouter();
   return (
     <>
+      <GlobalStyle />
       <ThemeProvider theme={theme}>
         <RoadProvider>
           <Container>
-            <NavBar />
+            {!asPath.includes("/contribute") && <NavBar />}
             <Component {...pageProps} />
-            <Footer />
+            {!asPath.includes("/contribute") && <Footer />}
           </Container>
         </RoadProvider>
       </ThemeProvider>
-      <GlobalStyle />
     </>
   );
 }

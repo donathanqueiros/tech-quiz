@@ -1,4 +1,4 @@
-import { Topic } from "data/road";
+import { Road } from "data/road";
 import api from "shared/api";
 
 export const getQuiz = async (
@@ -11,7 +11,7 @@ export const getQuiz = async (
   params.append("topicId", topicId);
   params.append("level", level);
 
-  const response = await api.get<Topic>(`/quiz`, { params });
+  const response = await api.get<Road>(`/quiz`, { params });
 
   return response.data;
 };
