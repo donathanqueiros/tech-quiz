@@ -8,6 +8,7 @@ import { GlobalStyle } from "styles/globalStyle";
 import { RoadProvider } from "contexts/RoadContext";
 import { useRouter } from "next/router";
 import "antd/dist/antd.css";
+import 'animate.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { asPath } = useRouter();
