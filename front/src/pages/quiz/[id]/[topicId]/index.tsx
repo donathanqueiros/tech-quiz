@@ -9,7 +9,6 @@ import bg from "assets/bg.png";
 import { GetServerSideProps } from "next";
 import { Road } from "data/road";
 import { getQuiz } from "services/quizService";
-import { useRoad } from "contexts/RoadContext";
 import CardResult from "components/CardResult";
 import { useRouter } from "next/router";
 import StyledFolderCard from "@/components/FolderCard";
