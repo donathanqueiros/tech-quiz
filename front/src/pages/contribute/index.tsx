@@ -1,3 +1,4 @@
+import EditorComponent from "@/components/EditorComponent";
 import { Alternative, Question, Road, Topic } from "@/data/road";
 import { Table, Form, Input, Checkbox, Button, Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
@@ -17,98 +18,6 @@ export default function Contribute() {
     };
     getData();
   }, []);
-
-  // useEffect(() => {
-  //   if (selectedTopic) {
-  //     const index = selectedRoad?.topics.findIndex(
-  //       (topic) => topic.id === selectedTopic?.id
-  //     );
-  //     debugger;
-
-  //     if (index !== undefined && index >= 0 && selectedRoad?.topics) {
-  //       const copy = { ...selectedRoad };
-
-  //       copy.topics[index] = { ...selectedTopic };
-
-  //       setSelectedRoad({ ...selectedRoad, ...copy });
-  //     } else {
-  //       const copy = { ...selectedRoad } as Road;
-
-  //       copy.topics && copy.topics.push({ ...selectedTopic });
-
-  //       setSelectedRoad({ ...selectedRoad, ...copy });
-  //     }
-  //   } else {
-  //     form.resetFields();
-  //   }
-  // }, [selectedTopic]);
-
-  // useEffect(() => {
-  //   if (selectedQuestion) {
-  //     const index = selectedTopic?.questions.findIndex(
-  //       (question) => question.id === selectedQuestion?.id
-  //     );
-
-  //     if (index !== undefined && index >= 0 && selectedTopic?.questions) {
-  //       const copy = { ...selectedTopic };
-
-  //       copy.questions[index] = { ...selectedQuestion };
-
-  //       setSelectedTopic({ ...selectedTopic, ...copy });
-  //     } else {
-  //       const copy = { ...selectedTopic } as Topic;
-
-  //       copy.questions && copy.questions.push({ ...selectedQuestion });
-
-  //       setSelectedTopic({ ...selectedTopic, ...copy });
-  //     }
-  //   } else {
-  //     form.resetFields();
-  //   }
-  // }, [selectedQuestion]);
-
-  // useEffect(() => {
-  //   if (selectedAlternative) {
-  //     const index = selectedQuestion?.alternatives.findIndex(
-  //       (alternative) => alternative.id === selectedAlternative?.id
-  //     );
-
-  //     debugger;
-
-  //     if (index !== undefined && index >= 0 && selectedQuestion?.alternatives) {
-  //       const copy = { ...selectedQuestion };
-
-  //       copy.alternatives[index] = { ...selectedAlternative };
-
-  //       setSelectedQuestion({ ...selectedQuestion, ...copy });
-  //     } else {
-  //       const copy = { ...selectedQuestion } as Question;
-
-  //       copy.alternatives && copy.alternatives.push({ ...selectedAlternative });
-
-  //       setSelectedQuestion({ ...selectedQuestion, ...copy });
-  //     }
-  //   } else {
-  //     form.resetFields();
-  //   }
-  // }, [selectedAlternative]);
-
-  // useEffect(() => {
-  //   if (selectedRoad) {
-  //     form.setFieldsValue({ ...selectedRoad });
-  //   }
-
-  //   if (selectedTopic) {
-  //     form.setFieldsValue({ ...selectedTopic });
-  //   }
-
-  //   if (selectedQuestion) {
-  //     form.setFieldsValue({ ...selectedQuestion });
-  //   }
-  //   if (selectedAlternative) {
-  //     form.setFieldsValue({ ...selectedAlternative });
-  //   }
-  // }, [selectedRoad, selectedTopic, selectedQuestion, selectedAlternative]);
 
   return (
     <Content>
@@ -162,6 +71,29 @@ const RoadEdit = ({
   road: Road;
 }) => {
   const [selectedTopic, setSelectedTopic] = useState<Topic>();
+
+  useEffect(() => {
+    if (selectedTopic) {
+      const index = road?.topics.findIndex(
+        (topic) => topic.id === selectedTopic?.id
+      );
+      debugger;
+
+      if (index !== undefined && index >= 0 && road?.topics) {
+        const copy = { ...road };
+
+        copy.topics[index] = { ...selectedTopic };
+
+        setRoad({ ...road, ...copy });
+      } else {
+        const copy = { ...road } as Road;
+
+        copy.topics && copy.topics.push({ ...selectedTopic });
+
+        setRoad({ ...road, ...copy });
+      }
+    }
+  }, [selectedTopic]);
 
   return selectedTopic ? (
     <TopicEdit topic={selectedTopic} setTopic={setSelectedTopic} />
@@ -251,7 +183,28 @@ const TopicEdit = ({
 }) => {
   const [selectedQuestion, setSelectedQuestion] = useState<Question>();
 
-  console.log();
+  useEffect(() => {
+    if (selectedQuestion) {
+      const index = topic?.questions.findIndex(
+        (question) => question.id === selectedQuestion?.id
+      );
+
+      if (index !== undefined && index >= 0 && topic?.questions) {
+        const copy = { ...topic };
+
+        copy.questions[index] = { ...selectedQuestion };
+
+        setTopic({ ...topic, ...copy });
+      } else {
+        const copy = { ...topic } as Topic;
+
+        copy.questions && copy.questions.push({ ...selectedQuestion });
+
+        setTopic({ ...topic, ...copy });
+      }
+    }
+  }, [selectedQuestion]);
+
   return selectedQuestion ? (
     <QuestionEdit
       setQuestion={setSelectedQuestion}
@@ -344,6 +297,28 @@ const QuestionEdit = ({
 }) => {
   const [selectedAlternative, setSelectedAlternative] = useState<Alternative>();
 
+  useEffect(() => {
+    if (selectedAlternative) {
+      const index = question?.alternatives.findIndex(
+        (alternative) => alternative.id === selectedAlternative?.id
+      );
+
+      if (index !== undefined && index >= 0 && question?.alternatives) {
+        const copy = { ...question };
+
+        copy.alternatives[index] = { ...selectedAlternative };
+
+        setQuestion({ ...question, ...copy });
+      } else {
+        const copy = { ...question } as Question;
+
+        copy.alternatives && copy.alternatives.push({ ...selectedAlternative });
+
+        setQuestion({ ...question, ...copy });
+      }
+    }
+  }, [selectedAlternative]);
+
   return selectedAlternative ? (
     <>
       <AlternativeEdit
@@ -385,8 +360,8 @@ const QuestionEdit = ({
           },
         ]}
       >
-        <Input />
       </Form.Item>
+        <EditorComponent />
       <Form.Item
         label="answerId"
         name="answerId"
