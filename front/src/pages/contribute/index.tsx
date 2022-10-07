@@ -1,9 +1,9 @@
-import EditorComponent from "@/components/EditorComponent";
 import { Alternative, Question, Road, Topic } from "@/data/road";
-import { Table, Form, Input, Checkbox, Button, Select } from "antd";
+import { Table, Form, Input, Button, Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getRoads } from "services/roadService";
 import styled from "styled-components";
+import Editor from "@/components/Editor";
 
 export default function Contribute() {
   const [roads, setRoads] = useState<Road[]>([]);
@@ -77,7 +77,6 @@ const RoadEdit = ({
       const index = road?.topics.findIndex(
         (topic) => topic.id === selectedTopic?.id
       );
-      debugger;
 
       if (index !== undefined && index >= 0 && road?.topics) {
         const copy = { ...road };
@@ -359,9 +358,8 @@ const QuestionEdit = ({
             message: "Please input your username!",
           },
         ]}
-      >
-      </Form.Item>
-        <EditorComponent />
+      ></Form.Item>
+      <Editor />
       <Form.Item
         label="answerId"
         name="answerId"
@@ -535,4 +533,8 @@ const alternativesColumns = [
 const Content = styled.div`
   padding: 0px 200px 0px 200px;
   background: white;
+
+  * {
+    color: black;
+  }
 `;

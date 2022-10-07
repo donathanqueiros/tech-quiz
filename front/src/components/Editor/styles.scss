@@ -1,31 +1,3 @@
-import { createGlobalStyle } from "styled-components";
-
-export const GlobalStyle = createGlobalStyle`
-body {
-  padding: 0;
-  margin: 0;
-  font-family: "DM Sans", sans-serif;
-  width:100vw ;
-  scroll-behavior: smooth;
-  overflow-x: hidden;
-
-  * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  color: white;
-}
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-
-// new
-
-
 .other h2 {
     font-size: 18px;
     color: #444;
@@ -764,7 +736,3 @@ i.right-align {
 i.justify-align {
     background-image: url(images/icons/justify.svg);
 }
-
-
-
-`;
