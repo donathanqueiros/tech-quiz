@@ -47,20 +47,20 @@ export default async function handler(
 
     const sha = await getLastModificationSha();
 
-    await createNewBranch(branchName, sha);
+    // await createNewBranch(branchName, sha);
 
-    await createOrUpdateFile({
-      branchName,
-      filePath,
-      messageCommit,
-      content,
-      commiter: {
-        name: "teste",
-        email: "teste@teste.com",
-      },
-    });
+    // await createOrUpdateFile({
+    //   branchName,
+    //   filePath,
+    //   messageCommit,
+    //   content,
+    //   commiter: {
+    //     name: "teste",
+    //     email: "teste@teste.com",
+    //   },
+    // });
 
-    createPullRequest({
+    await createPullRequest({
       branchName,
       title: `feat: add road ${road.name}`,
       body: `feat: add road ${road.name}`,
