@@ -1,3 +1,5 @@
+import { Road } from "data/road";
+
 export default {
   id: 4,
   name: "backend",
@@ -36,4 +38,4 @@ export default {
       ],
     },
   ],
-};
+} as Road;

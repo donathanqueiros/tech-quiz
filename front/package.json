@@ -10,12 +10,14 @@
   },
   "dependencies": {
     "@lexical/react": "^0.5.0",
+    "@octokit/core": "^4.1.0",
     "animate.css": "^4.1.1",
     "antd": "^4.23.2",
     "axios": "^0.27.2",
     "draft-js": "^0.11.7",
     "lexical": "^0.5.0",
     "next": "12.3.0",
+    "prettier": "^2.8.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
@@ -25,6 +27,7 @@
   "devDependencies": {
     "@types/draft-js": "^0.11.9",
     "@types/node": "18.7.18",
+    "@types/prettier": "^2.7.1",
     "@types/react": "18.0.20",
     "@types/react-dom": "18.0.6",
     "@types/react-draft-wysiwyg": "^1.13.4",
