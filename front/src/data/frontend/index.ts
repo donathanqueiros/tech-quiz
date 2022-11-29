@@ -1,10 +1,9 @@
 import { Road } from "data/road";
-
 export default {
   id: 1,
-  name: "frontend",
+  name: "novo dado",
+  description: "",
   color: "#00FF00",
-  description:'',
   topics: [
     {
       id: 1,
