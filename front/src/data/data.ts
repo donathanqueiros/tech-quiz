@@ -1,6 +1,4 @@
+import novo_dado from "./novo_dado";
 import backend from "./backend";
-import frontend from "./frontend";
-
 import { Road } from "./road";
-
-export default [frontend, backend] as Road[];
+export default [novo_dado, backend] as Road[];
