@@ -3,8 +3,8 @@ import { Table, Form, Input, Button, Select } from "antd";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { getRoads } from "services/roadService";
 import styled from "styled-components";
-import Editor from "@/components/Editor";
 import api from "@/shared/api";
+import Editor from "@/components/Editor/";
 
 export default function Contribute() {
   const [roads, setRoads] = useState<Road[]>([]);
@@ -338,7 +338,7 @@ const RoadEdit = ({
         >
           add topic
         </Button>
-        <Button>Save Topic</Button>
+        <Button type="primary">Save Topic</Button>
       </Form.Item>
 
       <Table

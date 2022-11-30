@@ -37,7 +37,7 @@ const createRoad = async (road: Road) => {
 
   const roadName = road.name.toLowerCase().replace(" ", "_");
 
-  const filePath = `front/src/data/${roadName}/index.ts`;
+  const filePath = `src/data/${roadName}/index.ts`;
   const messageCommit = `feat: add road ${road.name} - ${randomString}`;
 
   const sha = await getLastModificationSha();
@@ -60,7 +60,7 @@ const createRoad = async (road: Road) => {
 
     const messageCommitDataUpdate = `feat: update data - ${randomString}`;
 
-    const filePathData = `front/src/data/index.ts`;
+    const filePathData = `src/data/index.ts`;
 
     await createOrUpdateFile({
       branchName,
@@ -107,7 +107,7 @@ const updateRoad = async (id: number, road: Road) => {
 
   const roadName = roadFound.name.toLowerCase().replace(" ", "_");
 
-  const filePath = `front/src/data/${roadName}/index.ts`;
+  const filePath = `src/data/${roadName}/index.ts`;
   const messageCommit = `feat: update road ${road.name} - ${randomString}`;
 
   const sha = await getLastModificationSha();
@@ -136,7 +136,7 @@ const updateRoad = async (id: number, road: Road) => {
     if (changedName) {
       const updatedData = await createUpdateData([road.name], [roadFound.name]);
       const messageCommitDataUpdate = `feat: update data - ${randomString}`;
-      const filePathData = `front/src/data/index.ts`;
+      const filePathData = `src/data/index.ts`;
 
       const file = await getFileContent({
         branchName,
