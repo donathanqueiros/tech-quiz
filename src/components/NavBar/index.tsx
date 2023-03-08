@@ -14,24 +14,16 @@ export const NavBar: React.FC = () => {
         <Nav>
           <ul>
             <NavItem selected={asPath === "/"}>
-              <Link href="/">
-                <a>Inicio</a>
-              </Link>
+              <Link href="/">Inicio</Link>
             </NavItem>
             <NavItem selected={asPath.includes("/quiz")}>
-              <Link href="/quiz">
-                <a>Quizzes</a>
-              </Link>
+              <Link href="/quiz">Quizzes</Link>
             </NavItem>
             <NavItem selected={asPath === "/about"}>
-              <Link href="/about">
-                <a>Sobre</a>
-              </Link>
+              <Link href="/about">Sobre</Link>
             </NavItem>
             <NavItem selected={asPath === "/contact"}>
-              <Link href="/contact">
-                <a>Contato</a>
-              </Link>
+              <Link href="/contact">Contato</Link>
             </NavItem>
           </ul>
         </Nav>
