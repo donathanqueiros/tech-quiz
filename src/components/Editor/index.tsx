@@ -25,7 +25,6 @@ const Editor = () => {
   return (
     <LexicalComposer initialConfig={initialConfig}>
       <div className="editor-container">
-        <ToolbarPlugin />
         <div className="editor-inner">
           <RichTextPlugin
             contentEditable={<ContentEditable className="editor-input" />}
@@ -33,7 +32,6 @@ const Editor = () => {
             ErrorBoundary={LexicalErrorBoundary}
           />
           <HistoryPlugin />
-          <TreeViewPlugin />
           <AutoFocusPlugin />
           {/* <CodeHighlightPlugin /> */}
           <ListPlugin />

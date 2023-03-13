@@ -1,14 +1,45 @@
 import { Alternative, Question, Road, Topic } from "@/data/road";
 import { Table, Form, Input, Button, Select } from "antd";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+  createContext,
+  useContext,
+} from "react";
 import { getRoads } from "services/roadService";
 import styled from "styled-components";
 import api from "@/shared/api";
-import Editor from "@/components/Editor/";
+import dynamic from "next/dynamic";
+import "./../../../node_modules/@donathanqueiros/tech-quiz-editor/dist/index.css";
+import RoadCard from "@/components/RoadCard";
+import { SketchPicker } from "react-color";
+import CardTopic from "@/components/CardTopic";
+import StyledAlternative from "@/components/Alternative";
+import bg from "assets/background.jpg";
+
+export const RoadContext = createContext<Road | undefined>(undefined);
+
+const Editor = dynamic(
+  () => import("@donathanqueiros/tech-quiz-editor").then((mod) => mod.Editor),
+  {
+    ssr: false,
+  }
+);
+
+const useRoad = () => {
+  const context = useContext(RoadContext);
+  if (context === undefined) {
+    throw new Error("useRoad must be used within a RoadProvider");
+  }
+  return context;
+};
 
 export default function Contribute() {
   const [roads, setRoads] = useState<Road[]>([]);
   const [selectedRoad, setSelectedRoad] = useState<Road>();
+  const [showEditor, setShowEditor] = useState(false);
 
   const [form] = Form.useForm();
 
@@ -16,6 +47,7 @@ export default function Contribute() {
     const getData = async () => {
       const data = await getRoads();
       setRoads(data);
+      setShowEditor(true);
     };
     getData();
   }, []);
@@ -236,7 +268,9 @@ export default function Contribute() {
         </>
       ) : (
         <div style={{ display: "flex" }}>
-          <RoadEdit road={selectedRoad} setRoad={setSelectedRoad} />
+          <RoadContext.Provider value={selectedRoad}>
+            <RoadEdit road={selectedRoad} setRoad={setSelectedRoad} />
+          </RoadContext.Provider>
           <pre style={{ background: "#ebeaea", width: "30%" }}>
             <code>{JSON.stringify(selectedRoad, null, 2)}</code>
           </pre>
@@ -289,6 +323,18 @@ const RoadEdit = ({
       }}
     >
       <h1>Road Edit</h1>
+
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <RoadCard title={road.name} color={road.color} />
+      </div>
+
       <Form.Item
         label="id"
         name="id"
@@ -313,8 +359,14 @@ const RoadEdit = ({
         <Input.TextArea />
       </Form.Item>
 
-      <Form.Item label="color" name="color" initialValue={road.color}>
-        <Input />
+      <Form.Item
+        label="color"
+        name="color"
+        initialValue={road.color}
+        getValueFromEvent={(e) => e.hex}
+        getValueProps={(value) => ({ color: value })}
+      >
+        <SketchPicker />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -365,6 +417,7 @@ const TopicEdit = ({
   topic: Topic;
 }) => {
   const [selectedQuestion, setSelectedQuestion] = useState<Question>();
+  const road = useRoad();
 
   useEffect(() => {
     if (selectedQuestion) {
@@ -403,6 +456,9 @@ const TopicEdit = ({
       }}
     >
       <h1>Topic Edit</h1>
+
+      <CardTopic color={road.color}>{topic.name}</CardTopic>
+
       <Form.Item
         label="id"
         name="id"
@@ -543,7 +599,9 @@ const QuestionEdit = ({
           },
         ]}
       ></Form.Item>
-      <Editor />
+
+      <Editor onChange={(value: any) => console.log(value)} />
+
       <Form.Item
         label="answerId"
         name="answerId"
@@ -604,6 +662,7 @@ const AlternativeEdit = ({
   setAlternative: Dispatch<SetStateAction<Alternative | undefined>>;
   alternative: Alternative;
 }) => {
+  const { color } = useRoad();
   return (
     <Form
       style={{ width: "70%", paddingRight: "20px" }}
@@ -613,6 +672,28 @@ const AlternativeEdit = ({
       }}
     >
       <h1>Alternative Edit</h1>
+      <div
+        style={{
+          width: "100%",
+          height: "400px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundImage: `url(${bg.src})`,
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "center",
+          color: "white !important",
+        }}
+      >
+        <StyledAlternative
+          key={alternative.id}
+          prefix={"A"}
+          content={alternative.content}
+          color={color}
+          status={"default"}
+        />
+      </div>
+
       <Form.Item label="id" name="id" initialValue={alternative.id}>
         <Input value={alternative.id} disabled />
       </Form.Item>
@@ -627,7 +708,7 @@ const AlternativeEdit = ({
           },
         ]}
       >
-        <Input />
+        <Editor onChange={(value: any) => console.log(value)} />
       </Form.Item>
 
       <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
@@ -716,7 +797,7 @@ const alternativesColumns = [
 
 const Content = styled.div`
   padding: 0px 200px 0px 200px;
-  background: white;
+  background: #f0eeee;
 
   * {
     color: black;

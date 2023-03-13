@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@donathanqueiros/tech-quiz-editor": "^0.0.15",
     "@lexical/clipboard": "^0.6.4",
     "@lexical/code": "^0.6.4",
     "@lexical/file": "^0.6.4",
@@ -32,6 +33,7 @@
     "next": "^13.2.3",
     "prettier": "^2.8.0",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "^18.2.0",
     "react-draft-wysiwyg": "^1.15.0",
     "react-icons": "^4.4.0",
@@ -43,6 +45,7 @@
     "@types/node": "18.7.18",
     "@types/prettier": "^2.7.1",
     "@types/react": "18.0.20",
+    "@types/react-color": "^3.0.6",
     "@types/react-dom": "18.0.6",
     "@types/react-draft-wysiwyg": "^1.13.4",
     "@types/styled-components": "^5.1.26",

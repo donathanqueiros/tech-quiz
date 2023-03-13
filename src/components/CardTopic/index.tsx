@@ -14,6 +14,7 @@ const CardTopic = styled.div<CardTopicProps>`
   align-items: center;
   font-weight: 700;
   font-size: 20px;
+  color: white !important;
 `;
 
 export default CardTopic;
