@@ -5,6 +5,7 @@ interface CardTopicProps extends React.HTMLAttributes<HTMLButtonElement> {
 }
 
 const CardTopic = styled.div<CardTopicProps>`
+  border-radius: 8px;
   cursor: pointer;
   width: 100%;
   background-color: ${(props) => props.color || props.theme.colors.primary};

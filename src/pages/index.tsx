@@ -130,6 +130,14 @@ const Container = styled.div`
   flex-direction: column;
   min-height: 100vh;
   background-color: black;
+
+  span,
+  h1,
+  h2,
+  h3,
+  button {
+    color: white;
+  }
 `;
 
 export const getServerSideProps: GetServerSideProps = async () => {

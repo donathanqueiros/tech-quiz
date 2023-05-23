@@ -675,14 +675,14 @@ const AlternativeEdit = ({
       <div
         style={{
           width: "100%",
-          height: "400px",
+          minHeight: "400px",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           backgroundImage: `url(${bg.src})`,
           backgroundRepeat: "no-repeat",
           backgroundSize: "center",
-          color: "white !important",
+          backgroundPosition: "center",
         }}
       >
         <StyledAlternative
@@ -799,7 +799,5 @@ const Content = styled.div`
   padding: 0px 200px 0px 200px;
   background: #f0eeee;
 
-  * {
-    color: black;
-  }
+  color: black;
 `;

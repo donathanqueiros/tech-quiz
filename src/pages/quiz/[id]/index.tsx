@@ -106,7 +106,6 @@ const StyledContents = styled(Contents)`
       justify-content: space-between;
 
       ${CardTopic} {
-        border-radius: 8px;
         max-width: 400px;
         width: 100%;
 

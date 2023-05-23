@@ -1,4 +1,4 @@
-import Editor from "@/components/Editor";
+import { Editor } from "@donathanqueiros/tech-quiz-editor";
 import styled from "styled-components";
 
 const Teste = () => (

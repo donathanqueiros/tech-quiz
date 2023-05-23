@@ -1,6 +1,12 @@
+import dynamic from "next/dynamic";
 import { FC } from "react";
 import styled from "styled-components";
-
+const Editor = dynamic(
+  () => import("@donathanqueiros/tech-quiz-editor").then((mod) => mod.Editor),
+  {
+    ssr: false,
+  }
+);
 interface Props {
   className?: string;
   prefix?: string;
@@ -23,7 +29,9 @@ const Alternative: FC<Props> = ({
         <span>{prefix}</span>
       </div>
 
-      <span className="content">{content}</span>
+      <span className="content">
+        <Editor value={content} readOnly />
+      </span>
     </div>
   );
 };
